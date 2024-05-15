@@ -1,0 +1,67 @@
+<div class="bg-gradient-to-r from-gray-800 to-gray-900 min-h-screen py-10">
+  <div class="container mx-auto px-4 py-6 bg-gray-100 shadow-2xl rounded-lg">
+    <h1 class="text-4xl font-bold mb-6 text-center text-gray-900">Lista de Empleados</h1>
+    
+    <div class="flex justify-between mb-4">
+      <input 
+        type="text" 
+        placeholder="Buscar empleados..." 
+        class="w-full p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [(ngModel)]="searchQuery" 
+        (input)="filterEmpleados()"
+      />
+      <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-r-lg transition duration-300" 
+        [routerLink]="['/empleados/nuevo']">Registrar</button>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white shadow-lg rounded-lg overflow-hidden">
+        <thead class="bg-gray-800">
+          <tr>
+            <th class="py-3 px-6 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">Nombre</th>
+            <th class="py-3 px-6 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">Correo</th>
+            <th class="py-3 px-6 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">País</th>
+            <th class="py-3 px-6 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">Tipo de Identificación</th>
+            <th class="py-3 px-6 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">Área</th>
+            <th class="py-3 px-6 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">Fecha Ingreso</th>
+            <th class="py-3 px-6 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">Estado</th>
+            <th class="py-3 px-6 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <tr *ngFor="let empleado of paginatedEmpleados" class="hover:bg-gray-100 transition duration-300">
+            <td class="py-4 px-6 text-center whitespace-nowrap">{{ empleado.primer_nombre }} {{ empleado.otros_nombre }} {{ empleado.primer_apellido }}</td>
+            <td class="py-4 px-6 text-center whitespace-nowrap">{{ empleado.email }}</td>
+            <td class="py-4 px-6 text-center whitespace-nowrap">{{ empleado.pais.nombre }}</td>
+            <td class="py-4 px-6 text-center whitespace-nowrap">{{ empleado.identificacion_tipo.nombre }}</td>
+            <td class="py-4 px-6 text-center whitespace-nowrap">{{ empleado.area.nombre }}</td>
+            <td class="py-4 px-6 text-center whitespace-nowrap">{{ empleado.fecha_ingreso }}</td>
+            <td class="py-4 px-6 text-center whitespace-nowrap">{{ empleado.estado }}</td>
+            <td class="py-4 px-6 text-center whitespace-nowrap">
+              <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 transition duration-300" 
+                [routerLink]="['/empleados', empleado.id, 'editar']">Editar</button>
+              <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300" 
+                (click)="deleteEmpleado(empleado.id)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex justify-between items-center mt-4">
+      <div>
+        Mostrando {{ getStartIndex() }} a {{ getEndIndex() }} de {{ totalItems }} empleados
+      </div>
+      <div class="flex space-x-2">
+        <button class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-300" 
+          [disabled]="currentPage === 1" (click)="goToFirstPage()">Inicio</button>
+        <button class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-300" 
+          [disabled]="currentPage === 1" (click)="prevPage()">Anterior</button>
+        <button class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-300" 
+          [disabled]="currentPage * itemsPerPage >= totalItems" (click)="nextPage()">Siguiente</button>
+        <button class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-300" 
+          [disabled]="currentPage * itemsPerPage >= totalItems" (click)="goToLastPage()">Final</button>
+      </div>
+    </div>
+  </div>
+</div>

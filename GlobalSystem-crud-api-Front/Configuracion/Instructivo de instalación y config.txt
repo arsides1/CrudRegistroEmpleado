@@ -1,0 +1,33 @@
+Instructivo de instalación y configuración de la solución para ejecución y revisión de la
+misma.
+
+
+Parte back-laravel:
+
+Comando:
+php artisan migrate
+
+
+Cambiar el user y contraseña:
+MySQL:
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=global_employee_db
+DB_USERNAME=root
+DB_PASSWORD=admin
+
+ejecutar aplicación:
+php artisan serve
+
+
+Front Angular:
+
+Instalar node_modules:
+npm install 
+
+compilar proyecto:
+ng serve --o
+
+
+
